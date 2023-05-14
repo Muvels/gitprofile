@@ -1,5 +1,5 @@
 import express from 'express';
-import gitrendering from './api/request.js'
+import gitrendering from './request.js'
 
 
 const app = express();
