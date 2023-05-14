@@ -46,7 +46,7 @@ async function render(layout, doInvisibleBg, staticRendering){
         await utils_tool_box.sleep(500);
     }
 
-    output = await page.screenshot({fullPage : true, omitBackground: doInvisibleBg});
+    output = await page.screenshot({fullPage : false, omitBackground: doInvisibleBg});
     await browser.close();
     output = Buffer.from(output).toString('base64');
     return output;
