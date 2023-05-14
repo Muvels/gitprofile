@@ -9,7 +9,7 @@ import puppeteer_pure from 'puppeteer';
 async function render(layout, doInvisibleBg, staticRendering){
 
     const utils_tool_box = new utils();
-    var output = '';
+    var output = {};
 
     // If you use Puppeteer instead of the binaries use puppeteer_pure here.
     const puppeteer = chromium.puppeteer;
@@ -28,8 +28,12 @@ async function render(layout, doInvisibleBg, staticRendering){
         console.log(`[DEBUG] Puppeteer: Notices in the Console`);
     });
 
-    await page.evaluate(async (layout) => {
-        document.body.innerHTML = layout;
+    const dimensions = await page.evaluate(async (layout) => {
+
+        var insert = document.createElement('div');
+        insert.innerHTML = layout;
+
+        document.body.append(insert);
 
         //Wait till all Images are loaded...
         const selectors = Array.from(document.querySelectorAll("img"));
@@ -40,15 +44,22 @@ async function render(layout, doInvisibleBg, staticRendering){
             img.addEventListener('error', reject);
             });
         }));
+
+        var obj = {};
+        obj.width = insert.offsetWidth;
+        obj.height = insert.offsetHeight;
+
+        return obj;
     }, layout);
 
     if (!staticRendering) {
         await utils_tool_box.sleep(500);
     }
 
-    output = await page.screenshot({fullPage : false, omitBackground: doInvisibleBg});
+    output.base = await page.screenshot({fullPage : false, omitBackground: doInvisibleBg});
     await browser.close();
-    output = Buffer.from(output).toString('base64');
+    output.base = Buffer.from(output.base).toString('base64');
+    output.dimensions = dimensions;
     return output;
 }
 
