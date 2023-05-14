@@ -1,6 +1,7 @@
 import axios from 'axios';
 import render from '../render/render.js';
 import utils from '../utils.js';
+import sizeOf from 'image-size'
 
 async function gitwaterfall(username, doInvisibleBg, staticRendering, repo){
 
@@ -53,8 +54,11 @@ export default async (req, res) => {
     */
 
     if (output.code == 200){
+        var img = Buffer.from(output.base.split(';base64,').pop(), 'base64');
+        var dimensions = sizeOf(img);
+
         res.setHeader("Content-Type", "image/svg+xml");
-        res.send(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:image/png;base64,${output.base}"></image></svg>`);
+        res.send(`<svg xmlns="http://www.w3.org/2000/svg" width="${dimensions.width}" height="${dimensions.height}" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:image/png;base64,${output.base}"></image></svg>`);
     }
     else {
         res.setHeader("Content-Type", "text/html; charset=utf-8");
