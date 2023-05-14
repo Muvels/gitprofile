@@ -4,16 +4,17 @@ import utils from '../utils.js';
 import chromium from 'chrome-aws-lambda';
 
 // You could also use puppeteer if you running on local Systems.
-import puppeteer from 'puppeteer';
+import puppeteer_pure from 'puppeteer';
 
 async function render(layout, doInvisibleBg){
 
     const utils_tool_box = new utils();
     var output = '';
-    
 
-    // If you use Puppeteer instead of the binaries remove the 'chromium' here.
-    const browser = await chromium.puppeteer.launch({
+    // If you use Puppeteer instead of the binaries use puppeteer_pure here.
+    puppeteer = chromium.puppeteer;
+    
+    const browser = await puppeteer.launch({
         args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
         defaultViewport: chromium.defaultViewport,
         executablePath: await chromium.executablePath,
