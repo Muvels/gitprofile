@@ -15,7 +15,7 @@ async function render(layout, doInvisibleBg){
     const puppeteer = chromium.puppeteer;
     
     const browser = await puppeteer.launch({
-        args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+        args: ["--hide-scrollbars", "--disable-web-security"],
         defaultViewport: chromium.defaultViewport,
         executablePath: await chromium.executablePath,
         headless: true,
