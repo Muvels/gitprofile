@@ -2,11 +2,13 @@ import axios from 'axios';
 import render from '../render/render.js';
 import utils from '../utils.js';
 
-async function gitwaterfall(username, doInvisibleBg, staticRendering){
+async function gitwaterfall(username, doInvisibleBg, staticRendering, repo){
 
     var output = {};
+    repo = (repo)? repo : username;
+    const url = `https://raw.githubusercontent.com/${username}/${repo}/main/layout.html`;
 
-    output = await axios.get(`https://raw.githubusercontent.com/${username}/${username}/main/layout.html`)
+    output = await axios.get(url)
     .then(async (response) => {
         output.base = await render(response.data, doInvisibleBg, staticRendering);
         output.code = 200;
@@ -23,7 +25,7 @@ async function gitwaterfall(username, doInvisibleBg, staticRendering){
 
 export default async (req, res) => {
     const {
-      username = '',
+      username,
       doInvisibleBg = 'true',
       staticRendering = 'true',
       repo
@@ -32,8 +34,8 @@ export default async (req, res) => {
     const utils_tool_box = new utils();
     var output = {};
 
-    if (username != ''){
-        output = await gitwaterfall(username, utils_tool_box.CastToBoolean(doInvisibleBg), utils_tool_box.CastToBoolean(staticRendering));
+    if (username != undefined){
+        output = await gitwaterfall(username, utils_tool_box.CastToBoolean(doInvisibleBg), utils_tool_box.CastToBoolean(staticRendering), repo);
     }
     else {
         output.base = `There is no username given to the API.`
