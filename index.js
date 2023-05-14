@@ -11,10 +11,4 @@ app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
   });
 
-//Debug
-(async () => {
-    fetchgitprofile();
-    //console.log(await render());
-});
-
 export default app;

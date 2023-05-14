@@ -21,6 +21,7 @@ async function render(layout, doInvisibleBg){
         headless: true,
         ignoreHTTPSErrors: true,
       });
+      console.log('browser taken');
     const page = await browser.newPage();
 
     //Debug
@@ -31,11 +32,11 @@ async function render(layout, doInvisibleBg){
     await page.evaluate((layout) => {
         document.body.innerHTML = layout;
     }, layout);
-
+    console.log('evaluate taken');
     await utils_tool_box.sleep(500);
 
     output = await page.screenshot({fullPage : true, omitBackground: doInvisibleBg});
-    
+    console.log('Screenshot taken');
     await browser.close();
     output = Buffer.from(output).toString('base64');
     return output;
