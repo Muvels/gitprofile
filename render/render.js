@@ -17,7 +17,6 @@ async function render(layout, doInvisibleBg){
     const browser = await puppeteer.launch({
         args: chromium.args,
         defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath,
         headless: true,
         ignoreHTTPSErrors: true,
       });
