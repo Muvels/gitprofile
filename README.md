@@ -4,6 +4,10 @@
 ## About GitProfile
 GitProfile renders HTML code for your README files both for your profile and for your repositories, the special thing about GitProfile is that it also takes CSS into account when rendering the content. Which gives you infinitely more freedom in designing your README pages than the GitHub markdown renderer.
 
+
+![EXAMPLE](https://gitprofilerender.vercel.app/?username=Muvels&repo=GitProfile)
+
+
 ## Usage
 Since the rendered HTML code is later output as an SVG image, the rendered content can be displayed on the README page via an image. The content is rendered JIT (Just in Time) each time. Therefore also dynamic content or changes in the layout are displayed directly.
 
