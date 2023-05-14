@@ -1,12 +1,25 @@
-import puppeteer from 'puppeteer';
 import utils from '../utils.js';
+
+// This is a Vercel specific Package.
+import chromium from 'chrome-aws-lambda';
+
+// You could also use puppeteer if you running on local Systems.
+import puppeteer from 'puppeteer';
 
 async function render(layout, doInvisibleBg){
 
     const utils_tool_box = new utils();
     var output = '';
     
-    const browser = await puppeteer.launch({headless: true});
+
+    // If you use Puppeteer instead of the binaries remove the 'chromium' here.
+    const browser = await chromium.puppeteer.launch({
+        args: [...chromium.args, "--hide-scrollbars", "--disable-web-security"],
+        defaultViewport: chromium.defaultViewport,
+        executablePath: await chromium.executablePath,
+        headless: true,
+        ignoreHTTPSErrors: true,
+      });
     const page = await browser.newPage();
 
     //Debug
