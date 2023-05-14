@@ -1,13 +1,14 @@
 import axios from 'axios';
 import render from '../render/render.js';
+import utils from '../utils.js';
 
-async function gitwaterfall(username, doInvisibleBg){
+async function gitwaterfall(username, doInvisibleBg, staticRendering){
 
     var output = '';
 
     output = await axios.get(`https://raw.githubusercontent.com/${username}/${username}/main/layout.html`)
     .then(async (response) => {
-        output = await render(response.data, doInvisibleBg);
+        output = await render(response.data, doInvisibleBg, staticRendering);
         return output.toString();
     })
     .catch((response) => {
@@ -19,14 +20,17 @@ async function gitwaterfall(username, doInvisibleBg){
 export default async (req, res) => {
     const {
       username,
-      doInvisibleBg,
+      doInvisibleBg = 'true',
+      staticRendering = 'true',
       repo
     } = req.query;
 
+    const utils_tool_box = new utils();
     var output = '';
 
     if (username != ''){
-        output = await gitwaterfall(username, (doInvisibleBg === true));
+        console.log((doInvisibleBg === 'true'))
+        output = await gitwaterfall(username, utils_tool_box.CastToBoolean(doInvisibleBg), utils_tool_box.CastToBoolean(staticRendering));
     }
 
     /*
@@ -34,8 +38,6 @@ export default async (req, res) => {
         ~ MIME-Type: image/svg+xml
         ~ Output will be send as inline SVG with Base64
     */
-
     res.setHeader("Content-Type", "image/svg+xml");
-    
-    return res.send(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:image/png;base64,${output}"></image></svg>`);
+    res.send(`<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:image/png;base64,${output}"></image></svg>`);
 }
