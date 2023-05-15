@@ -5,13 +5,12 @@ import chromium from 'chrome-aws-lambda';
 // You could also use puppeteer if you running on local Systems.
 import puppeteer_pure from 'puppeteer';
 
+const app = express();
+const port = 3000;
 
+const page = await StartRenderer();
 
-
-async function startExpressServer(){
-
-  const app = express();
-  const port = 3000;
+async function StartRenderer(){
 
   const puppeteer = chromium.puppeteer;
       
@@ -23,17 +22,13 @@ async function startExpressServer(){
       ignoreHTTPSErrors: true,
     });
   const page = await browser.newPage();
-
-
-
-  app.get('/', gitrendering(page));
-
-  app.listen(port, () => {
-      console.log(`Example app listening at http://localhost:${port}`);
-    });
-
+  return page 
 }
 
-//startExpressServer();
+app.get('/', gitrendering(page));
 
-export default startExpressServer();
+app.listen(port, () => {
+    console.log(`Example app listening at http://localhost:${port}`);
+  });
+
+export default app;
