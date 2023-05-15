@@ -6,10 +6,12 @@ import chromium from 'chrome-aws-lambda';
 import puppeteer_pure from 'puppeteer';
 
 
-const app = express();
-const port = 3000;
+
 
 async function startExpressServer(){
+
+  const app = express();
+  const port = 3000;
 
   const puppeteer = chromium.puppeteer;
       
@@ -32,6 +34,6 @@ async function startExpressServer(){
 
 }
 
-startExpressServer();
+//startExpressServer();
 
-export default app;
+export default startExpressServer();
