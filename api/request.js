@@ -2,7 +2,7 @@ import axios from 'axios';
 import render from '../render/render.js';
 import utils from '../utils.js';
 
-async function gitwaterfall(username, doInvisibleBg, staticRendering, repo){
+async function gitwaterfall(instance, username, doInvisibleBg, staticRendering, repo){
 
     var output = {};
     repo = (repo)? repo : username;
@@ -10,7 +10,7 @@ async function gitwaterfall(username, doInvisibleBg, staticRendering, repo){
 
     output = await axios.get(url)
     .then(async (response) => {
-        output = await render(response.data, doInvisibleBg, staticRendering);
+        output = await render(instance, response.data, doInvisibleBg, staticRendering);
         output.code = 200;
         return output;
     })
@@ -23,41 +23,43 @@ async function gitwaterfall(username, doInvisibleBg, staticRendering, repo){
     return output;
 }
 
-export default async (req, res) => {
-    const {
-      username,
-      doInvisibleBg = 'true',
-      staticRendering = 'true',
-      repo
-    } = req.query;
+export default (instance) => {
+    return async (req, res) => {
+        const {
+        username,
+        doInvisibleBg = 'true',
+        staticRendering = 'true',
+        repo
+        } = req.query;
 
-    const utils_tool_box = new utils();
-    var output = {};
+        const utils_tool_box = new utils();
+        var output = {};
 
-    if (username != undefined){
-        output = await gitwaterfall(username, utils_tool_box.CastToBoolean(doInvisibleBg), utils_tool_box.CastToBoolean(staticRendering), repo);
-    }
-    else {
-        output.base = `There is no username given to the API.`
-        output.code = 500;
-    }
+        if (username != undefined){
+            output = await gitwaterfall(instance, username, utils_tool_box.CastToBoolean(doInvisibleBg), utils_tool_box.CastToBoolean(staticRendering), repo);
+        }
+        else {
+            output.base = `There is no username given to the API.`
+            output.code = 500;
+        }
 
-    /*
-    Express JS will return:
-        ~ MIME-Type: image/svg+xml
-        ~ Output will be send as inline SVG with Base64
-        *************************************************
-        ~ MIME-Type: text/html; charset=utf-8
-        ~ Output will be HTML info text
+        /*
+        Express JS will return:
+            ~ MIME-Type: image/svg+xml
+            ~ Output will be send as inline SVG with Base64
+            *************************************************
+            ~ MIME-Type: text/html; charset=utf-8
+            ~ Output will be HTML info text
 
-    */
+        */
 
-    if (output.code == 200){
-        res.setHeader("Content-Type", "image/svg+xml");
-        res.send(`<svg xmlns="http://www.w3.org/2000/svg" width="${output.dimensions.width}" height="${output.dimensions.height}" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:image/png;base64,${output.base}"></image></svg>`);
-    }
-    else {
-        res.setHeader("Content-Type", "text/html; charset=utf-8");
-        res.send(`<html>${output.code} ${output.base}</html>`);
+        if (output.code == 200){
+            res.setHeader("Content-Type", "image/svg+xml");
+            res.send(`<svg xmlns="http://www.w3.org/2000/svg" width="${output.dimensions.width}" height="${output.dimensions.height}" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:image/png;base64,${output.base}"></image></svg>`);
+        }
+        else {
+            res.setHeader("Content-Type", "text/html; charset=utf-8");
+            res.send(`<html>${output.code} ${output.base}</html>`);
+        }
     }
 }

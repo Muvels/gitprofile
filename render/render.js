@@ -1,27 +1,10 @@
 import utils from '../utils.js';
 
-// This is a Vercel specific Package.
-import chromium from 'chrome-aws-lambda';
+async function render(instance, layout, doInvisibleBg, staticRendering){
 
-// You could also use puppeteer if you running on local Systems.
-import puppeteer_pure from 'puppeteer';
-
-async function render(layout, doInvisibleBg, staticRendering){
-
+    const page = instance;
     const utils_tool_box = new utils();
     var output = {};
-
-    // If you use Puppeteer instead of the binaries use puppeteer_pure here.
-    const puppeteer = chromium.puppeteer;
-    
-    const browser = await puppeteer.launch({
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        executablePath: await chromium.executablePath,
-        headless: true,
-        ignoreHTTPSErrors: true,
-      });
-    const page = await browser.newPage();
 
     //Debug
     page.on('console', msg => {
@@ -57,7 +40,8 @@ async function render(layout, doInvisibleBg, staticRendering){
     }
 
     output.base = await page.screenshot({fullPage : false, omitBackground: doInvisibleBg});
-    await browser.close();
+    //await browser.close();
+    page.reload();
     output.base = Buffer.from(output.base).toString('base64');
     output.dimensions = dimensions;
     return output;
