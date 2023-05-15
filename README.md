@@ -8,7 +8,6 @@ GitProfile renders HTML code for your README files both for your profile and for
 
 ## GitProfile Example
 ![EXAMPLE](https://gitprofilerender.vercel.app/?username=Muvels&repo=GitProfile)
-![EXAMPLE](https://gitprofilerender.vercel.app/?username=muvels)
 
 
 ## Usage
