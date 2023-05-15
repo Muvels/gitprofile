@@ -7,9 +7,11 @@ async function render(instance, layout, doInvisibleBg, staticRendering){
     var output = {};
 
     //Debug
+    /*
     page.on('console', msg => {
         console.log(`[DEBUG] Puppeteer: Notices in the Console`);
     });
+    */
 
     const dimensions = await page.evaluate(async (layout) => {
 
@@ -41,7 +43,6 @@ async function render(instance, layout, doInvisibleBg, staticRendering){
 
     output.base = await page.screenshot({fullPage : false, omitBackground: doInvisibleBg});
     //await browser.close();
-    page.reload();
     output.base = Buffer.from(output.base).toString('base64');
     output.dimensions = dimensions;
     return output;
