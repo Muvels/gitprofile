@@ -1,7 +1,9 @@
 import express from 'express';
 import gitrendering from './api/request.js'
+
 // This is a Vercel specific Package.
-import chromium from 'chrome-aws-lambda';
+import edgeChromium from 'chrome-aws-lambda'
+import puppeteer from 'puppeteer-core'
 // You could also use puppeteer if you running on local Systems.
 import puppeteer_pure from 'puppeteer';
 
@@ -12,12 +14,10 @@ const page = await StartRenderer();
 
 async function StartRenderer(){
 
-  const puppeteer = chromium.puppeteer;
-      
   const browser = await puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath,
+      args: edgeChromium.args,
+      defaultViewport: edgeChromium.defaultViewport,
+      executablePath: await edgeChromium.executablePath,
       headless: true,
       ignoreHTTPSErrors: true,
     });
