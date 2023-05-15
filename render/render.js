@@ -47,7 +47,7 @@ async function render(layout, doInvisibleBg, staticRendering){
 
         var obj = {};
         obj.width = insert.offsetWidth;
-        obj.height = insert.offsetHeight;
+        obj.height = insert.offsetHeight + 50;
 
         return obj;
     }, layout);
@@ -57,7 +57,7 @@ async function render(layout, doInvisibleBg, staticRendering){
     }
 
     output.base = await page.screenshot({fullPage : false, omitBackground: doInvisibleBg});
-    await browser.close();
+    //await browser.close();
     output.base = Buffer.from(output.base).toString('base64');
     output.dimensions = dimensions;
     return output;
