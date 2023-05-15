@@ -3,7 +3,7 @@
 
 
 ## About GitProfile
-GitProfile renders HTML code for your README files both for your profile and for your repositories, the special thing about GitProfile is that it also takes CSS into account when rendering the content. Which gives you infinitely more freedom in designing your README pages than the GitHub markdown renderer.
+GitProfile renders HTML code for your README files both for your profile and for your repositories, the special thing about GitProfile is that it also takes CSS into account when rendering the content. Which gives you infinitely more freedom in designing your README pages than the GitHub markdown renderer does.
 
 
 ## GitProfile Example
