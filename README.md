@@ -1,10 +1,12 @@
 # GitProfile
 🎨 Personalize your Profile Readme.md with CSS
 
+
 ## About GitProfile
 GitProfile renders HTML code for your README files both for your profile and for your repositories, the special thing about GitProfile is that it also takes CSS into account when rendering the content. Which gives you infinitely more freedom in designing your README pages than the GitHub markdown renderer.
 
 
+## GitProfile Example
 ![EXAMPLE](https://gitprofilerender.vercel.app/?username=Muvels&repo=GitProfile)
 
 
@@ -17,7 +19,8 @@ Use GitProfile:
 
 That's it, now your layout page is rendered via GitProfile and you can use HTML and CSS to the fullest.
 
-## GitProfile parameters
+
+## GitProfile Parameters
 
 - `username` | **Connection to the correct User Profile** [*Required* ]
 
