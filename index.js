@@ -32,5 +32,6 @@ async function startExpressServer(){
 
 }
 
+startExpressServer();
 
-export default startExpressServer;
+export default app;
