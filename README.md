@@ -17,7 +17,7 @@ Use GitProfile:
 - Create a layout.html file in the `main` branch of your repository and write its content.
 - In your GitHub file `ReadMe.md` add an image linked to the GitProfile URL.
 
-That's it, now your layout page is rendered via GitProfile and you can use HTML and CSS to the fullest.
+That's it, now your layout page is rendered via GitProfile and you can use HTML and CSS.
 
 
 ## GitProfile Parameters
