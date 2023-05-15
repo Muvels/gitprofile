@@ -43,6 +43,7 @@ async function render(instance, layout, doInvisibleBg, staticRendering){
 
     output.base = await page.screenshot({fullPage : false, omitBackground: doInvisibleBg});
     //await browser.close();
+    await page.reload();
     output.base = Buffer.from(output.base).toString('base64');
     output.dimensions = dimensions;
     return output;
