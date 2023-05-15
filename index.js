@@ -30,6 +30,5 @@ async function startExpressServer(){
 
 }
 
-await startExpressServer();
 
 export default startExpressServer;
