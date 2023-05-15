@@ -2,6 +2,8 @@ import express from 'express';
 import gitrendering from './api/request.js'
 // This is a Vercel specific Package.
 import chromium from 'chrome-aws-lambda';
+// You could also use puppeteer if you running on local Systems.
+import puppeteer_pure from 'puppeteer';
 
 
 const app = express();
