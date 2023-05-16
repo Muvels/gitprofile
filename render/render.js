@@ -21,7 +21,7 @@ async function render(instance, layout, doInvisibleBg, staticRendering){
     //await browser.close();
     await page.reload();
     output.base = Buffer.from(output.base).toString('base64');
-    output.dimensions = dimensions;
+    output.dimensions = {width:800,height:800};
     return output;
 }
 
