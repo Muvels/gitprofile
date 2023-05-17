@@ -1,4 +1,4 @@
-import axios from 'axios';
+import fetch from "node-fetch";
 import render from '../render/render.js';
 import utils from '../utils.js';
 
