@@ -5,6 +5,10 @@
             "use": "@vercel/node"
         }
     ],
+    "crons": [{
+        "path": "/ping/job",
+        "schedule": "* 2 * * *"
+      }],
     "routes": [
         {
           "src": "/(.*)",
