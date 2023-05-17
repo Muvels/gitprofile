@@ -8,9 +8,11 @@ async function gitwaterfall(instance, username, doInvisibleBg, staticRendering, 
     repo = (repo)? repo : username;
     const url = `https://raw.githubusercontent.com/${username}/${repo}/main/layout.html`;
 
-    output = await axios.get(url)
+    output = await fetch(url)
+    .then(async (response) => response.text())
     .then(async (response) => {
-        output = await render(instance, response.data, doInvisibleBg, staticRendering);
+        console.log(response)
+        output = await render(instance, response, doInvisibleBg, staticRendering);
         output.code = 200;
         return output;
     })
