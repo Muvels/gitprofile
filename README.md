@@ -6,7 +6,7 @@
 GitProfile renders HTML and CSS code for your README file of your profile, the special thing about GitProfile is that it also takes CSS into account when rendering the content. Which gives you infinitely more freedom in designing your README pages than the GitHub markdown renderer does.
 
 ## GitProfile Example
-<img src="https://gitprofilerender.vercel.app/?username=Muvels"/>
+<img src="https://git-profile-sigma.vercel.app/?username=Muvels"/>
 
 
 ## Usage
