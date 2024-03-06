@@ -2,66 +2,48 @@ import fetch from "node-fetch";
 import render from '../render/render.js';
 import utils from '../utils.js';
 
-async function gitwaterfall(instance, username, doInvisibleBg, staticRendering, repo){
+async function gitwaterfall(username){
 
-    var output = {};
-    repo = (repo)? repo : username;
-    const url = `https://raw.githubusercontent.com/${username}/${repo}/main/layout.html`;
-
+    let output;
+    const url = `https://raw.githubusercontent.com/${username}/${username}/main/layout.html`;
+    console.log(url);
     output = await fetch(url)
     .then(async (response) => response.text())
     .then(async (response) => {
-        console.log(response)
-        output = await render(instance, response, doInvisibleBg, staticRendering);
-        output.code = 200;
-        return output;
+        return response;
     })
-    .catch((response) => {
-        output.base = `Your Parameters are not correct, we tried to fetch the following path to the layout page: https://raw.githubusercontent.com/${username}/${username}/main/layout.html`;
-        output.code = 404;
-        output.log = `[DEBUG] :: ${response}`
-        return output;
-    });
+    output = await render(output);
     return output;
 }
 
-export default (instance) => {
+export default () => {
     return async (req, res) => {
         const {
         username,
-        doInvisibleBg = 'true',
-        staticRendering = 'true',
-        repo
         } = req.query;
 
-        const utils_tool_box = new utils();
         var output = {};
 
-        if (username != undefined){
-            output = await gitwaterfall(instance, username, utils_tool_box.CastToBoolean(doInvisibleBg), utils_tool_box.CastToBoolean(staticRendering), repo);
-        }
-        else {
+        if (username == undefined){
             output.base = `There is no username given to the API.`
             output.code = 500;
         }
 
-        /*
-        Express JS will return:
-            ~ MIME-Type: image/svg+xml
-            ~ Output will be send as inline SVG with Base64
-            *************************************************
-            ~ MIME-Type: text/html; charset=utf-8
-            ~ Output will be HTML info text
+        output = await gitwaterfall(username);
 
-        */
+        console.log("Wuhu")
 
-        if (output.code == 200){
+            /*
+            Express JS will return:
+                ~ MIME-Type: image/svg+xml
+                ~ Output will be send as inline SVG with Base64
+                *************************************************
+                ~ MIME-Type: text/html; charset=utf-8
+                ~ Output will be HTML info text
+
+            */
+            
             res.setHeader("Content-Type", "image/svg+xml");
-            res.send(`<svg xmlns="http://www.w3.org/2000/svg" width="${output.dimensions.width}" height="${output.dimensions.height}" xmlns:xlink="http://www.w3.org/1999/xlink"><image xlink:href="data:image/png;base64,${output.base}"></image></svg>`);
-        }
-        else {
-            res.setHeader("Content-Type", "text/html; charset=utf-8");
-            res.send(`<html>${output.code} ${output.base}</html>`);
-        }
+            res.send(output);
     }
 }
