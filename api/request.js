@@ -1,7 +1,5 @@
 import fetch from "node-fetch";
 import render from '../render/render.js';
-import utils from '../utils.js';
-
 async function gitwaterfall(username){
 
     let output;
