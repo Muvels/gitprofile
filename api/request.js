@@ -4,7 +4,6 @@ async function gitwaterfall(username){
 
     let output;
     const url = `https://raw.githubusercontent.com/${username}/${username}/main/layout.html`;
-    console.log(url);
     output = await fetch(url)
     .then(async (response) => response.text())
     .then(async (response) => {
