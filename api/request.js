@@ -31,8 +31,6 @@ export default () => {
 
         output = await gitwaterfall(username);
 
-        console.log("Wuhu")
-
             /*
             Express JS will return:
                 ~ MIME-Type: image/svg+xml
